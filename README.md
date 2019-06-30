@@ -1,5 +1,7 @@
 # fzf-coalesce
 
+<img width="756" alt="coalessce-sample" src="https://user-images.githubusercontent.com/6816040/60395179-a3e45680-9b6a-11e9-8048-4b55cb438910.png">
+
 This plugin provides united interface for [fzf-vim](https://github.com/junegunn/fzf.vim)'s following commands
 - Buffers
 - History
@@ -24,12 +26,11 @@ Plug 'relastle/fzf-coalescevim'
 ## Usage
 
 Map `FzfCoalesce` command to some key.
+Personally, I mapped it to <kbd>Space</kbd> + <kbd>,</kbd>.
 
 ```vim
 nnoremap <Space>, :<C-u>FzfCoalesce<CR>
 ```
-
-Personally, I mapped it to <kbd>Space</kbd> + <kbd>,</kbd>.
 
 ## Configuration
 
