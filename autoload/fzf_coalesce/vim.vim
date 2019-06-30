@@ -41,17 +41,6 @@ function! s:wrap(name, opts, bang)
   return wrapped
 endfunction
 
-if v:version >= 704
-  function! s:function(name)
-    return function(a:name)
-  endfunction
-else
-  function! s:function(name)
-    " By Ingo Karkat
-    return function(substitute(a:name, '^s:', matchstr(expand('<sfile>'), '<SNR>\d\+_\zefunction$'), ''))
-  endfunction
-endif
-
 let s:default_action = {
   \ 'ctrl-t': 'tab split',
   \ 'ctrl-x': 'split',
@@ -61,13 +50,6 @@ function! s:action_for(key, ...)
   let default = a:0 ? a:1 : ''
   let Cmd = get(get(g:, 'fzf_action', s:default_action), a:key, default)
   return type(Cmd) == s:TYPE.string ? Cmd : default
-endfunction
-
-function! s:warn(message)
-  echohl WarningMsg
-  echom a:message
-  echohl None
-  return 0
 endfunction
 
 function! s:get_git_root()
