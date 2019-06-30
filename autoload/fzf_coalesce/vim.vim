@@ -96,14 +96,22 @@ endfunction
 " SOFTWARE.
 "
 
-let g:zosterops_tag_delimiter = "\t"
-let g:zosterops_icon_delimiter = "  "
-let g:zosterops_tag_map = {
+" Delimiter used to seperate tag and original line
+let g:fzf_coalesce_tag_delimiter = "\t"
+
+" Delimiter used to seperate icon and file path
+" Note that this must not included g:fzf_coalesce_tag_delimiter
+let g:fzf_coalesce_icon_delimiter = "  "
+
+" Dictionary that map source name to tag
+let g:fzf_coalesce_tag_dict = {
   \ 'buf': "|BUF|",
   \ 'git': "|GIT|",
   \ 'mru': "|MRU|",
   \ }
-let g:zosterops_color_map = {
+
+" Dictionary that map source name to tag color
+let g:fzf_coalesce_tag_color_dict = {
   \ 'buf': "green",
   \ 'git': "yellow",
   \ 'mru': "blue",
@@ -112,8 +120,8 @@ let g:zosterops_color_map = {
 " Get src_name (`buf`, `git`, or `mru`) for
 " a given tag
 function! s:get_src_name(tag)
-  for k in keys(g:zosterops_tag_map)
-    if g:zosterops_tag_map[k] == a:tag
+  for k in keys(g:fzf_coalesce_tag_dict)
+    if g:fzf_coalesce_tag_dict[k] == a:tag
       return k
     endif
   endfor
@@ -124,11 +132,11 @@ endfunction
 " given src_name (`buf`, `git`, or `mru`)
 function! s:build_taggo_cmd(src_name)
   return "taggo " .
-        \ "--tag '" . get(g:zosterops_tag_map, a:src_name, "src_name") . "' " .
-        \ "--tag-color '" . get(g:zosterops_color_map, a:src_name, "black") . "' " .
-        \ "--tag-delimiter '" . g:zosterops_tag_delimiter . "' " .
+        \ "--tag '" . get(g:fzf_coalesce_tag_dict, a:src_name, "src_name") . "' " .
+        \ "--tag-color '" . get(g:fzf_coalesce_tag_color_dict, a:src_name, "black") . "' " .
+        \ "--tag-delimiter '" . g:fzf_coalesce_tag_delimiter . "' " .
         \ "--icon-indices 0 " .
-        \ "--icon-delimiter '" . g:zosterops_icon_delimiter . "' "
+        \ "--icon-delimiter '" . g:fzf_coalesce_icon_delimiter . "' "
 endfunction
 
 " Get external commnad that echos
@@ -148,7 +156,7 @@ function! s:after_select(lines)
     execute 'silent' cmd
   endif
   let target_line = a:lines[1]
-  let tag = split(target_line, g:zosterops_tag_delimiter)[0]
+  let tag = split(target_line, g:fzf_coalesce_tag_delimiter)[0]
   let src_name = s:get_src_name(tag)
   let revert_cmd = s:build_taggo_cmd(src_name) . "--revert"
   let after = system(s:get_echo_cmd([target_line]) . ' | ' . revert_cmd)
@@ -206,7 +214,7 @@ function! fzf_coalesce#vim#coalesce()
         \   'sink*' : function('s:after_select'),
         \   'options' : [
         \     '--ansi',
-        \     '-d', g:zosterops_tag_delimiter,
+        \     '-d', g:fzf_coalesce_tag_delimiter,
         \     '-n', '2..',
         \   ],
         \ },
