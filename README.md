@@ -4,8 +4,8 @@
 
 This plugin provides united interface for [fzf-vim](https://github.com/junegunn/fzf.vim)'s following commands
 - Buffers
-- History
 - GFiles
+- History
 with nerdfont icons powered by [taggo](https://github.com/relastle/taggo).
 
 ## Installation
