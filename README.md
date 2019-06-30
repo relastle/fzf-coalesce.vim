@@ -1,10 +1,12 @@
 # fzf-coalesce
 
 This plugin provides united interface for [fzf-vim](https://github.com/junegunn/fzf.vim)'s following commands
+
 - Buffers
 - GFiles
 - History
-with nerdfont icons powered by [taggo](https://github.com/relastle/taggo).
+
+with [nerdfont](https://nerdfonts.com/) icons powered by [taggo](https://github.com/relastle/taggo).
 
 | vim | neovim(using floating window) |
 | --- | ---                           |
