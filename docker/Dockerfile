@@ -17,9 +17,9 @@ FROM alpine:latest AS vim
 COPY --from=builder /go/bin/fzf /bin/
 COPY --from=builder /go/bin/taggo /bin/
 
-# Install git, zsh, curl, vim and neovim
+# Install git, bash, curl, vim and neovim
 RUN apk update && \
-    apk add --no-cache git zsh curl vim neovim && \
+    apk add --no-cache git bash curl vim neovim && \
     rm -f /tmp/* /etc/apk/cache/*
 
 # Install vim-plug
@@ -34,5 +34,5 @@ COPY . .
 RUN mkdir -p ~/.config/nvim && \
         ln -s /opt/fzf-coalesce/docker/.vimrc ~/ && \
         ln -s /opt/fzf-coalesce/docker/.vimrc ~/.config/nvim/init.vim
-RUN vim +PlugInstall +qall && \
-        vim +PlugInstall +qall
+RUN vim +PlugInstall +qall
+# RUN vim +PlugInstall +qall

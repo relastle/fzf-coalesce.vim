@@ -13,9 +13,8 @@ CONTENTS                                           *fzf-coalesce.vim-contents*
 REQUIREMENTS                                       *fzf-coalesce-vim-requirements*
 ==============================================================================
 
-This requires following two commands are available
+This requires `taggo` commnad  is available.
 
-fzf (https://github.com/junegunn/fzf)
 taggo (https://github.com/relastle/taggo)
 
 
@@ -23,9 +22,10 @@ INSTALLATION                                       *fzf-coalesce-vim-installatio
 ==============================================================================
 
 If you use vim-plug (https://github.com/junegunn/vim-plu://github.com/junegunn/vim-plug),
-write the following line into your .vimrc
+write the following lines into your .vimrc
 
 >
+    Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
     Plug 'relastle/fzf-coalesce.vim'
 <
 
