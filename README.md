@@ -48,7 +48,7 @@ Default configurations are like this.
 let g:fzf_coalesce_tag_delimiter = "\t"
 
 " Delimiter used to seperate icon and file path
-" Note that this must not included g:fzf_coalesce_tag_delimiter
+" Note that this must not include g:fzf_coalesce_tag_delimiter
 let g:fzf_coalesce_icon_delimiter = "  "
 
 " Dictionary that map source name to tag
