@@ -87,6 +87,18 @@ function! s:after_select(lines)
   execute 'e' after
 endfunction
 
+" remove elements from lst_target that is already
+" in lst.
+function! s:remove_duplicate(lst_target, lst)
+  let res_lst = []
+  for elm in a:lst_target
+    if index(a:lst, elm) < 0
+      call insert(res_lst, elm)
+    endif
+  endfor
+  return res_lst
+endfunction
+
 " Get list of current opened buffers
 function! s:get_bufs()
   return filter(map(filter(range(1, bufnr('$')), 'buflisted(v:val)'), 'bufname(v:val)'), 'strlen(v:val)')
@@ -100,37 +112,53 @@ function! s:get_mrus()
 endfunction
 
 " Get external shell command that outputs buffers list.
-function! s:get_buf_source()
-  let bufs = s:get_bufs()
-  if len(bufs) == 0
+function! s:get_buf_source(bufs)
+  if len(a:bufs) == 0
     return ':;'
   else
-    return s:get_echo_cmd(bufs) . ' | ' . s:build_taggo_cmd('buf') . ';'
+    return s:get_echo_cmd(a:bufs) . ' | ' . s:build_taggo_cmd('buf') . ';'
   endif
 endfunction
 
-" Get external shell command that outputs git-tracked list.
-function! s:get_git_source()
+" Get list of git files
+function! s:get_git_files()
   let root = s:get_git_root()
   if empty(root)
+    return []
+  endif
+  return split(system('git ls-files'), "\n")
+endfunction
+
+" Get external shell command that outputs git-tracked list.
+function! s:get_git_source(git_files)
+  if len(a:git_files) == 0
     return ':;'
   else
-    return 'git ls-files ' . root . ' | ' . s:build_taggo_cmd('git') . ';'
+    return s:get_echo_cmd(a:git_files) . ' | ' . s:build_taggo_cmd('git') . ';'
   endif
 endfunction
 
 " Get external shell command that outputs MRU files.
-function! s:get_mru_source()
-  let mrus = s:get_mrus()
-  if len(mrus) == 0
+function! s:get_mru_source(mrus)
+  if len(a:mrus) == 0
     return ':;'
   else
-    return s:get_echo_cmd(mrus) . ' | ' . s:build_taggo_cmd('mru') . ';'
+    return s:get_echo_cmd(a:mrus) . ' | ' . s:build_taggo_cmd('mru') . ';'
   endif
 endfunction
 
 function! fzf_coalesce#vim#coalesce()
-  let source = s:get_buf_source() . s:get_git_source() . s:get_mru_source()
+  " Get bufs
+  let bufs = s:get_bufs()
+  " Get Git files
+  let git_files = s:get_git_files()
+  let git_files = s:remove_duplicate(git_files, bufs)
+  " Get Mrus
+  let mrus = s:get_mrus()
+  let mrus = s:remove_duplicate(mrus, bufs)
+  let mrus = s:remove_duplicate(mrus, git_files)
+
+  let source = s:get_buf_source(bufs) . s:get_git_source(git_files) . s:get_mru_source(mrus)
   call fzf#run(s:wrap(
         \ 'coalesce',
         \ {
@@ -203,4 +231,3 @@ function! s:get_git_root()
   let root = split(system('git rev-parse --show-toplevel'), '\n')[0]
   return v:shell_error ? '' : root
 endfunction
-
