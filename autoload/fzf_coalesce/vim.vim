@@ -59,8 +59,9 @@ function! s:build_taggo_cmd(src_name)
         \ "--tag '" . get(g:fzf_coalesce_tag_dict, a:src_name, "src_name") . "' " .
         \ "--tag-color '" . get(g:fzf_coalesce_tag_color_dict, a:src_name, "black") . "' " .
         \ "--tag-delimiter '" . g:fzf_coalesce_tag_delimiter . "' " .
-        \ "--icon-indices 0 " .
-        \ "--icon-delimiter '" . g:fzf_coalesce_icon_delimiter . "' "
+        \ "--icon-delimiter '" . g:fzf_coalesce_icon_delimiter . "' " .
+        \ "--basenamed-index 0 " .
+        \ "--basenamed-delimiter '    ' "
 endfunction
 
 " Get external commnad that echos
