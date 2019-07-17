@@ -61,7 +61,7 @@ function! s:build_taggo_cmd(src_name)
         \ "--tag-delimiter '" . g:fzf_coalesce_tag_delimiter . "' " .
         \ "--icon-delimiter '" . g:fzf_coalesce_icon_delimiter . "' " .
         \ "--basenamed-index 0 " .
-        \ "--basenamed-delimiter '    ' "
+        \ "--basenamed-delimiter ' ' "
 endfunction
 
 " Get external commnad that echos
