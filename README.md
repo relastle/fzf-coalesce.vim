@@ -19,7 +19,7 @@ with [nerdfont](https://nerdfonts.com/) icons powered by [taggo](https://github.
 
 `fzf-coalesce` requires `taggo` command, so please install [taggo](https://github.com/relastle/taggo).
 ```sh
-go get -u https://github.com/relastle/taggo
+go get -u github.com/relastle/taggo
 ```
 
 Install (vim-plug)
