@@ -166,6 +166,7 @@ function! fzf_coalesce#vim#coalesce()
         \   'source'  : source,
         \   'sink*' : function('s:after_select'),
         \   'options' : [
+        \     '--no-sort',
         \     '--ansi',
         \     '-d', g:fzf_coalesce_tag_delimiter,
         \     '-n', '2..',
